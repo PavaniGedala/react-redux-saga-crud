@@ -1,0 +1,27 @@
+img.imgstyle {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-left: 15px;
+}
+
+table.empty {
+    width: 600px;
+    border-collapse: separate;
+    empty-cells: hide;
+}
+
+td.empty {
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: aqua;
+}
+
+table.auto {
+    table-layout: auto;
+}
+
+table.fixed {
+    table-layout: fixed;
+}

@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import Post from '../components/Post';
-import { deletePost,GET_STARTED } from '../actions';
+import GridComponent from '../components/GridComponent';
+import { deletePost,GET_STARTED,editPost } from '../actions';
+import '../components/styles.scss'
 class PostList extends React.Component {
  
   componentDidMount()
@@ -11,37 +12,50 @@ class PostList extends React.Component {
      this.props.getPosts();
   }
   render(){
-
-    const {posts,onDelete} = this.props;
+    const {posts,onDelete,onEdit} = this.props;
+    const headings = ['Title','Body','Actions'];
     return   (
-    <div> 
-        {posts.posts.length?posts.posts.map(post => {
-             return (
-               <Post post={ post } onDelete={ onDelete } key={ post.id } />
-            );
-           }):'No data'}
-        </div>)
+      <div className="container">
+          {posts.posts.length?<GridComponent 
+                                headings={headings}
+                                values={posts.posts}
+                                deleteAction={onDelete}
+                                editAction={onEdit}/>:'No data'}
+      </div>
+
+     
+    // <div className="container"> 
+    // <table className="empty">
+    //   <tr>
+    //     <th>Title</th>
+    //     <th>body</th>
+    //     <th>Actions</th>
+    //   </tr>
+    //   {posts.posts.length?posts.posts.map(post => {
+    //          return (
+    //            <Post post={ post } onDelete={ onDelete } key={ post.id } />
+    //         );
+    //        }):'No data'}
+
+    // </table>
+        
+    //     </div>
+        
+        )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onDelete: id => {
-      dispatch(deletePost(id));
-    },
-    getPosts: () => {
-      dispatch(GET_STARTED());
-    }
+    posts: state.posts,
+    editData: state.editPost
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {onDelete: deletePost,
+   onEdit: editPost,
+   getPosts: GET_STARTED
+  }
 )(PostList);
