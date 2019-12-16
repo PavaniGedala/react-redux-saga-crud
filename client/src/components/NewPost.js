@@ -10,11 +10,7 @@ class NewPost extends React.Component {
 
   constructor(props)
   {
-    console.log('constructor');
     super(props);
-    this.handleReset = this.handleReset.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       title: '',
       body: ''
@@ -31,18 +27,17 @@ class NewPost extends React.Component {
      }
      else{
       addPageReload({});
-      console.log('here');
-      this.handleReset();
      }
 
   }
 
 
   componentWillReceiveProps(nextProps){
-    const {editData,updateSuccess,addSuccess} = nextProps;
+    const {editData,updateSuccess,addSuccess,update} = nextProps;
     if(Object.keys(editData).length>0)
     {
       const {title,body} = editData;
+      if(update)
       this.setState({title,body});
     }
 
@@ -107,6 +102,7 @@ class NewPost extends React.Component {
               type="text"
               placeholder="Title"
               className="form-control"
+              name = "title"
               onChange={ this.handleInputChange }
               value={ this.state.title }
             />
@@ -116,6 +112,7 @@ class NewPost extends React.Component {
               cols="19"
               rows="8"
               placeholder="Body"
+              name="body"
               className="form-control"
               onChange={ this.handleInputChange }
               value={ this.state.body }>
